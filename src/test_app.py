@@ -4,6 +4,7 @@ Unit tests for the High School Management System API
 Tests cover all endpoints and edge cases for the FastAPI application.
 """
 
+import copy
 import pytest
 from fastapi.testclient import TestClient
 from app import app, activities
@@ -18,31 +19,7 @@ def client():
 @pytest.fixture(autouse=True)
 def reset_activities():
     """Reset activities data before each test to ensure test isolation"""
-    # Store original state
-    original_activities = {
-        "Chess Club": {
-            "description": "Learn strategies and compete in chess tournaments",
-            "schedule": "Fridays, 3:30 PM - 5:00 PM",
-            "max_participants": 12,
-            "participants": ["michael@mergington.edu", "daniel@mergington.edu"]
-        },
-        "Programming Class": {
-            "description": "Learn programming fundamentals and build software projects",
-            "schedule": "Tuesdays and Thursdays, 3:30 PM - 4:30 PM",
-            "max_participants": 20,
-            "participants": ["emma@mergington.edu", "sophia@mergington.edu"]
-        },
-        "Gym Class": {
-            "description": "Physical education and sports activities",
-            "schedule": "Mondays, Wednesdays, Fridays, 2:00 PM - 3:00 PM",
-            "max_participants": 30,
-            "participants": ["john@mergington.edu", "olivia@mergington.edu"]
-        }
-    }
-    
-    # Clear and restore activities
-    activities.clear()
-    activities.update(original_activities)
+    original_activities = copy.deepcopy(activities)
     
     yield
     
