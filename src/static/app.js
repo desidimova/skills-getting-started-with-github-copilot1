@@ -13,6 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Clear loading message
       activitiesList.innerHTML = "";
 
+      // Save currently selected activity
+      const currentSelection = activitySelect.value;
+
+      // Clear and reset the dropdown (keep the first default option)
+      activitySelect.innerHTML = '<option value="">-- Select an activity --</option>';
+
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
@@ -50,6 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
         option.textContent = name;
         activitySelect.appendChild(option);
       });
+
+      // Restore previously selected activity if it still exists
+      if (currentSelection && Array.from(activitySelect.options).some(opt => opt.value === currentSelection)) {
+        activitySelect.value = currentSelection;
+      }
     } catch (error) {
       activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
       console.error("Error fetching activities:", error);
