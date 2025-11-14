@@ -79,6 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       messageDiv.classList.remove("hidden");
 
+      // Refresh activities list to show updated participants
+      fetchActivities();
+
       // Hide message after 5 seconds
       setTimeout(() => {
         messageDiv.classList.add("hidden");
